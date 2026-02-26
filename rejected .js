@@ -16,18 +16,7 @@ for (let btn of rejectButtons) {
 }
 
 
-
-// deleted btn 
-// document.getElementById("delete-btn").addEventListener("click",function(){
-//     document.getElementById("card").style.display = "none";
-
-//     //decrease total job
-//     const totalJob = document.getElementById("total");
-//     let total = parseInt(totalJob.innerText);
-//      total --;
-//      totalJob.innerText = total;
-// });
-
+// delete button
 const deleteBtns = document.getElementsByClassName("delete-btn");
 
 for (let btn of deleteBtns) {
