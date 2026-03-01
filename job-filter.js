@@ -1,49 +1,55 @@
-const jobCards = document.querySelectorAll(".job-card");
-const allBtn = document.getElementById("All-job");
-const interviewBtn = document.getElementById("interview-job");
-const rejectedBtn = document.getElementById("rejected-job");
-const noJobCard = document.getElementById("no-job-card");
+document.addEventListener("DOMContentLoaded", function () {
 
-// Helper function: ফিল্টার করার পর মেসেজ কার্ড দেখাবে
-function filterJobs(status) {
-  let visibleCount = 0;
+    // Interview button
+    document.querySelectorAll(".interview-btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const card = this.closest(".job-card");
+            card.dataset.status = "interview";
+        });
+    });
 
-  jobCards.forEach(card => {
-    // placeholder card বাদ দিয়ে কাজ করবো
-    if (card.id === "no-job-card") return;
+    // Rejected button
+    document.querySelectorAll(".rejected-btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const card = this.closest(".job-card");
+            card.dataset.status = "rejected";
+        });
+    });
 
-    if (status === "all" || card.dataset.status === status) {
-      card.style.display = "block";
-      visibleCount++;
+});
+
+
+function switchTab(type) {
+
+    const cards = document.querySelectorAll(".job-card");
+
+    let found = false;
+
+    cards.forEach(card => {
+
+        if (card.id === "no-job-card") return;
+
+        const status = card.dataset.status;
+
+        if (type === "all") {
+            card.style.display = "block";
+            found = true;
+        }
+        else if (status === type) {
+            card.style.display = "block";
+            found = true;
+        }
+        else {
+            card.style.display = "none";
+        }
+
+    });
+
+    const noJob = document.getElementById("no-job-card");
+
+    if (!found && type !== "all") {
+        noJob.classList.remove("hidden");
     } else {
-      card.style.display = "none";
+        noJob.classList.add("hidden");
     }
-  });
-
-  // যদি কোনো কার্ড না থাকে → placeholder card দেখাও
-  if (visibleCount === 0) {
-    noJobCard.classList.remove("hidden");
-  } else {
-    noJobCard.classList.add("hidden");
-  }
 }
-
-// Filter buttons
-allBtn.addEventListener("click", () => filterJobs("all"));
-interviewBtn.addEventListener("click", () => filterJobs("interview"));
-rejectedBtn.addEventListener("click", () => filterJobs("rejected"));
-
-// Status Update
-document.querySelectorAll(".interview-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const card = btn.closest(".job-card");
-    card.dataset.status = "interview";
-  });
-});
-
-document.querySelectorAll(".rejected-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const card = btn.closest(".job-card");
-    card.dataset.status = "rejected";
-  });
-});

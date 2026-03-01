@@ -24,9 +24,14 @@ for (let btn of deleteBtns) {
     const card = btn.closest(".job-card");
     card.remove();
 
-     const totalJob = document.getElementById("total");
+     const totalJob = document.getElementById("job-count");
     let total = parseInt(totalJob.innerText);
      total --;
      totalJob.innerText = total;
+
+     const alljob = document.getElementById("count-job");
+    let all = parseInt(alljob.innerText);
+     all--;
+     alljob.innerText = all;
   });
 }

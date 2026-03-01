@@ -1,6 +1,7 @@
 
 const interviewButtons = document.getElementsByClassName("interview-btn");
 
+
 for (let btn of interviewButtons) {
   btn.addEventListener("click", function () {
     const card = btn.closest(".job-card"); 
@@ -13,10 +14,10 @@ for (let btn of interviewButtons) {
     currentInterview++;
     interview.innerText = currentInterview;
 
-    const jobtotal = document.getElementById("job");
-    let currjob = 0;
+    // const jobtotal = document.getElementById("job");
+    // let currjob = 0;
    
-    currjob++;
-    parseInt(jobtotal.innerText) = currjob;
+    // currjob++;
+    // parseInt(jobtotal.innerText) = currjob;
   });
 }
