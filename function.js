@@ -1,54 +1,74 @@
 let currentTab = "all";
 
-
 document.addEventListener("DOMContentLoaded", function(){
     switchTab("all");
+    updateTotalJobs();   
+    updateAvailableJobs(); 
 });
 
 
-const tabActive = ["bg-blue-500","border-blue", 'text-white'];
-const tabinActive = ['bg-transparent', "text-blue-700", 'border-blue-700'];
+const tabActive = ["bg-blue-500","border-blue", "text-white"];
+const tabinActive = ["bg-transparent","text-blue-700", "border-blue-700"];
 
 
-const allConteinar= document.getElementById("all-conteinar");
-const interviewConteinar= document.getElementById("interview-conteinar");
-const rejectedConteinar= document.getElementById("rejected-conteinar");
+function switchTab(tab) {
+    currentTab = tab;
 
+    const tabs = ["all","interview","rejected"];
 
-
-function switchTab(tab){
-    console.log(tab);
-const tabs= ["all","interview","rejected"]
-    
-    for(const t of tabs)
-    {
-        const tabname = document.getElementById(t + '-job');
-        if(t=== tab)
-        {
+   
+    for (const t of tabs) {
+        const tabname = document.getElementById(t + "-job");
+        if (!tabname) continue;
+        if (t === tab) {
             tabname.classList.remove(...tabinActive);
-            // console.log("apply");
-        
-        
             tabname.classList.add(...tabActive);
+        } else {
+            tabname.classList.remove(...tabActive);
+            tabname.classList.add(...tabinActive);
         }
-        else{
-
-        tabname.classList.remove(...tabActive);
-        tabname.classList.add(...tabinActive);
     }
 
+  
+    const cards = document.querySelectorAll(".job-card");
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+        const status = card.dataset.status || "all";
+
+        if (tab === "all") {
+            card.style.display = "block";
+            visibleCount++;
+        } else if (status === tab) {
+            card.style.display = "block";
+            visibleCount++;
+        } else {
+            card.style.display = "none";
+        }
+    });
+
+    // --- Add bydefaultempty state  ---
+    const emptyState = document.getElementById("empty-state");
+
+    if (visibleCount === 0) {
+        emptyState.classList.remove("hidden");
+    } else {
+        emptyState.classList.add("hidden");
+    }
+
+    
+    updateAvailableJobs();
 }
 
 
+function updateTotalJobs() {
+    const cards = document.querySelectorAll(".job-card");
+    document.getElementById("job-count").textContent = cards.length;
 }
 
-function countCard(){
-const count = document.querySelectorAll("#job-conteinar .job-card").length;
-console.log("job card:" ,count);
-document.getElementById("job-count").textContent = count;
-document.getElementById("count-job").textContent = count;
 
+function updateAvailableJobs() {
+    const cards = document.querySelectorAll(".job-card");
+    const visibleCards = Array.from(cards).filter(card => card.style.display !== "none");
+    document.getElementById("count-job").textContent = visibleCards.length;
 }
-countCard();
-
-

@@ -1,23 +1,22 @@
-
 const interviewButtons = document.getElementsByClassName("interview-btn");
-
 
 for (let btn of interviewButtons) {
   btn.addEventListener("click", function () {
-    const card = btn.closest(".job-card"); 
+
+    const card = btn.closest(".job-card");
     const appliedBtn = card.querySelector(".applyed-btn");
-    appliedBtn.innerHTML = "APPLIED";
-    appliedBtn.style.color = "blue";
 
-    const interview = document.getElementById("add-interview");
-    let currentInterview = parseInt(interview.innerText);
-    currentInterview++;
-    interview.innerText = currentInterview;
+    if (card.dataset.status !== "interview") {
 
-    // const jobtotal = document.getElementById("job");
-    // let currjob = 0;
-   
-    // currjob++;
-    // parseInt(jobtotal.innerText) = currjob;
+      card.dataset.status = "interview";
+
+      appliedBtn.innerText = "APPLIED";
+      appliedBtn.classList.remove("text-gray-400");
+      appliedBtn.classList.add("text-blue-500");
+
+      const interviewCount = document.getElementById("add-interview");
+      let current = parseInt(interviewCount.innerText);
+      interviewCount.innerText = current + 1;
+    }
   });
 }
